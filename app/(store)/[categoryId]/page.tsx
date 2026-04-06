@@ -1,4 +1,5 @@
 import HeroImage from "@/app/ui/HeroImage"
+import NavSection from "@/app/ui/NavSection"
 import { getProducts } from "@/src/services/categories"
 import Image from "next/image"
 
@@ -10,6 +11,7 @@ const StorePage = async ({ params }: { params: Params }) => {
 
   return (
     <div>
+      <NavSection/>
       <HeroImage/>
       <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-10">
         {products.products.map((p) => (
