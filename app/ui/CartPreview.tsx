@@ -14,7 +14,7 @@ export function CartPreview() {
   return (
     <div className="bg-paper border border-black/10 w-80">
 
-      <div className="px-5 py-4 border-b border-black/[0.06]">
+      <div className="px-5 py-4 border-b border-black/6">
         <h4 className="text-[11px] tracking-[0.15em] uppercase font-medium">
           Bolsa de compra
         </h4>
@@ -30,7 +30,7 @@ export function CartPreview() {
           </div>
         ) : (
           contents.map((item) => (
-            <div key={item.productId} className="flex gap-3 p-4 border-b border-black/[0.06]">
+            <div key={item.productId} className="flex gap-3 p-4 border-b border-black/6">
               <div className="relative w-14 h-20 shrink-0 overflow-hidden bg-surface">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/img/${item.image}`}

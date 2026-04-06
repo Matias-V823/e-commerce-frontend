@@ -38,7 +38,7 @@ const Payment = () => {
         <div className="flex-1 flex justify-end">
           <Link
             href="/"
-            className="text-[10px] tracking-[0.1em] uppercase text-ash hover:text-ink transition-colors"
+            className="text-[10px] tracking-widest uppercase text-ash hover:text-ink transition-colors"
           >
             ← Seguir comprando
           </Link>
@@ -69,7 +69,7 @@ const Payment = () => {
             </div>
           ) : (
             contents.map((item) => (
-              <div key={item.productId} className="flex gap-5 py-6 border-b border-black/[0.06]">
+              <div key={item.productId} className="flex gap-5 py-6 border-b border-black/6">
 
                 <div className="relative w-16 h-24 shrink-0 bg-surface overflow-hidden">
                   <Image
@@ -136,10 +136,10 @@ const Payment = () => {
             Resumen del pedido
           </h2>
 
-          <div className="border-t border-black/[0.06] pt-4 pb-4">
+          <div className="border-t border-black/6 pt-4 pb-4">
             <button
               onClick={() => setCouponOpen(!couponOpen)}
-              className="flex items-center justify-between w-full text-[11px] tracking-[0.1em] uppercase text-ash hover:text-ink transition-colors cursor-pointer"
+              className="flex items-center justify-between w-full text-[11px] tracking-widest uppercase text-ash hover:text-ink transition-colors cursor-pointer"
             >
               <span>Código de descuento</span>
               <span className="text-base font-light leading-none">{couponOpen ? '−' : '+'}</span>
@@ -160,7 +160,7 @@ const Payment = () => {
             )}
           </div>
 
-          <div className="border-t border-black/[0.06] py-4 flex justify-between items-center">
+          <div className="border-t border-black/6 py-4 flex justify-between items-center">
             <span className="text-[11px] tracking-[0.08em] uppercase text-ash font-light">Subtotal</span>
             <span className="text-[12px] tabular-nums">${total.toFixed(2)}</span>
           </div>
@@ -211,7 +211,7 @@ const Payment = () => {
             Proceder al pago
           </button>
 
-          <div className="mt-5 pt-5 border-t border-black/[0.06]">
+          <div className="mt-5 pt-5 border-t border-black/6">
             <div className="flex items-center justify-center gap-5 mb-4">
               <img src="/visa-new-checkout-logo-2.png" alt="Visa" className="h-5 object-contain opacity-50" />
               <img src="/mastercard-new-checkout-logo-2.png" alt="Mastercard" className="h-5 object-contain opacity-50" />
