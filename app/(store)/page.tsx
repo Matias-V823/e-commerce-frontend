@@ -1,6 +1,7 @@
-const page = () => {
-  return (
-    <div>page</div>
-  )
+import { redirect } from "next/navigation"
+
+const Home = () => {
+  redirect('/1')
 }
-export default page
+export default Home
+
