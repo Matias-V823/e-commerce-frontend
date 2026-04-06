@@ -3,6 +3,7 @@
 import { useStore } from "@/src/store/store";
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 
 export function CartPreview() {
   const contents = useStore((state) => state.contents)
@@ -76,9 +77,11 @@ export function CartPreview() {
             <span className="text-[11px] tracking-[0.08em] uppercase font-light">Total</span>
             <span className="text-[12px] font-medium">${total.toFixed(2)}</span>
           </div>
-          <button className="w-full bg-ink text-paper text-[11px] tracking-[0.15em] uppercase py-3.5 hover:bg-ink/80 transition-colors cursor-pointer font-light">
+          <Link 
+            href={'/payment'}
+            className="block w-full text-center bg-ink text-paper text-[11px] tracking-[0.15em] uppercase py-3.5 hover:bg-ink/80 transition-colors cursor-pointer font-light">
             Continuar compra
-          </button>
+          </Link>
         </div>
       )}
 
