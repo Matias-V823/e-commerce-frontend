@@ -2,6 +2,7 @@
 
 import { useStore } from "@/src/store/store";
 import { TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/16/solid";
+import Image from "next/image";
 
 
 export function CartPreview() {
@@ -19,7 +20,14 @@ export function CartPreview() {
             <div className="max-h-64 overflow-y-auto">
                 {contents.map((item) => (
                     <div key={item.productId} className="flex items-center justify-between text-xs border-b border-zinc-200 p-2 gap-2">
-                        <img src={item.image} className="w-8 h-8 rounded-md object-cover"/>
+                        <Image 
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/img/${item.image}`} 
+                            alt={`Imagen del producto ${item.name}`}
+                            className="rounded-md object-cover"
+                            width={50}
+                            height={50}
+
+                        />
                         <div className="flex flex-col flex-1">
                             <h3 className="font-medium">{item.name}</h3>
                             <p className="text-zinc-500">${item.price}</p>
