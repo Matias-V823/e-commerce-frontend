@@ -51,7 +51,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
             return
         }
         const contents = get().contents.map(item =>
-            item.productId === productId
+            item.productId === productId && item.inventory >= quantity
                 ? { ...item, quantity }
                 : item
         )
