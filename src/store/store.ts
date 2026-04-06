@@ -66,7 +66,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
     },
     calculateTotal: () => {
         const total = get().contents.reduce((acc, item) => {
-            return acc + (item.quantity + item.price)
+            return acc + (item.quantity * item.price)
         }, 0)
 
         set(() => ({

@@ -12,36 +12,39 @@ const StorePage = async ({ params }: { params: Params }) => {
 
   return (
     <div>
-      <NavSection/>
-      <HeroImage/>
-      <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-10">
-        {products.products.map((p) => (
-          <div 
-            key={p.id} 
-            className="group w-64 border border-zinc-100 p-5 transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-2 bg-white"
-          >
-            <div className="overflow-hidden mb-4">
-              <Image
-                src={`${process.env.API_URL}/img/${p.image}`}
-                alt={`Imagen de producto ${p.name}`}
-                width={400}
-                height={600}
-                loading="eager"
-                className="transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
+      <HeroImage />
+      <NavSection currentCategoryId={categoryId} />
 
-            <div className="flex justify-between text-zinc-600 font-light">
-              <div>
-                <h3 className="text-sm uppercase font-medium">{p.name}</h3>
-                <p className="text-sm text-zinc-400">${p.price}</p>
+      <div className="px-px pt-px">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px">
+          {products.products.map((p) => (
+            <div key={p.id} className="group relative overflow-hidden bg-surface">
+
+              <div className="relative aspect-3/4 overflow-hidden">
+                <Image
+                  src={`${process.env.API_URL}/img/${p.image}`}
+                  alt={p.name}
+                  fill
+                  loading="eager"
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+                <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <AddProductButton product={p} />
+                </div>
               </div>
-              <AddProductButton
-                product={p}
-              />
+
+              <div className="pt-2.5 pb-5 px-2">
+                <p className="text-[11px] tracking-[0.07em] uppercase text-ink font-light leading-snug">
+                  {p.name}
+                </p>
+                <p className="text-[11px] text-ash mt-0.5">
+                  ${p.price}
+                </p>
+              </div>
+
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   )

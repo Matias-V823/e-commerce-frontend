@@ -3,34 +3,39 @@
 import { useState, useRef } from 'react';
 
 interface HoverOverlayProps {
-    trigger: React.ReactNode;
-    content: React.ReactNode;
+  trigger: React.ReactNode;
+  content: React.ReactNode;
 }
 
-export default function HoverOverlay({
-    trigger,
-    content,
-}: HoverOverlayProps) {
-    const [isVisible, setIsVisible] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
+export default function HoverOverlay({ trigger, content }: HoverOverlayProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const handleMouseEnter = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setIsVisible(true);
+  };
 
-    return (
-        <div
-            ref={containerRef}
-            className="relative inline-block pb-24"
-            onMouseEnter={() => setIsVisible(true)}
-            onMouseLeave={() => setIsVisible(false)}
-        >
-            <div>{trigger}</div>
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setIsVisible(false), 150);
+  };
 
-            {isVisible && (
-                <div
-                    className={`absolute z-50 -translate-x-72 top-8 transition-opacity duration-200 opacity-100`}
-                >
-                    {content}
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {trigger}
+
+      {isVisible && (
+        <>
+          <div className="absolute right-0 top-full h-3 w-full" />
+          <div className="absolute right-0 top-full pt-3 z-50 shadow-sm">
+            {content}
+          </div>
+        </>
+      )}
+    </div>
+  );
 }

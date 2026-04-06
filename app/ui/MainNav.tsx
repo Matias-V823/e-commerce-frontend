@@ -1,22 +1,59 @@
 'use client';
 
-import { ShoppingBagIcon } from "@heroicons/react/16/solid";
+import { ShoppingBagIcon, MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/outline";
 import HoverOverlay from "./HoverOverlay";
 import { CartPreview } from "./CartPreview";
+import { useStore } from "@/src/store/store";
 
 export default function MainNav() {
+  const itemCount = useStore((state) =>
+    state.contents.reduce((acc, item) => acc + item.quantity, 0)
+  );
+
   return (
-    <header className="px-10 py-5 flex flex-col md:flex-row justify-between ">
-        <div className="flex justify-center">
-            <h3>E-commerce <span className="text-[10px] text-zinc-500">by Matias-V823</span></h3>
+    <header className="sticky top-0 z-40 bg-paper border-b border-black/10">
+      <div className="flex items-center justify-between h-14 px-6">
+
+        <div className="flex-1">
+          <span className="text-[11px] tracking-[0.2em] uppercase font-medium select-none">
+            E-Commerce by Matias-V823
+          </span>
         </div>
-        <nav className="flex flex-col md:flex-row gap-2 items-center mt-5 md:mt-0">
+
+        <nav className="flex items-center gap-8">
+          {["Hombre", "Mujer", "Niño"].map((label) => (
+            <button
+              key={label}
+              className="text-[11px] tracking-[0.14em] uppercase font-light text-ink hover:text-ash transition-colors cursor-pointer"
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="flex-1 flex items-center justify-end gap-5">
+          <button className="hover:opacity-40 transition-opacity cursor-pointer" aria-label="Buscar">
+            <MagnifyingGlassIcon className="w-4.5 h-4.5" strokeWidth={1.5} />
+          </button>
+          <button className="hover:opacity-40 transition-opacity cursor-pointer" aria-label="Cuenta">
+            <UserIcon className="w-4.5 h-4.5" strokeWidth={1.5} />
+          </button>
           <HoverOverlay
-            trigger={<ShoppingBagIcon className="w-5 h-5 cursor-pointer relative" />}
+            trigger={
+              <div className="relative flex items-center hover:opacity-40 transition-opacity cursor-pointer">
+                <ShoppingBagIcon className="w-4.5 h-4.5" strokeWidth={1.5} />
+                {itemCount > 0 && (
+                  <span className="absolute -top-2 -right-2.5 min-w-4 h-4 flex items-center justify-center bg-ink text-paper text-[9px] rounded-full px-0.5">
+                    {itemCount}
+                  </span>
+                )}
+              </div>
+            }
             content={<CartPreview />}
           />
-          <span className="absolute top-10 right-12 text-xs">1</span>
-        </nav>
+        </div>
+
+      </div>
     </header>
-  )
+  );
 }
