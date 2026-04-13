@@ -1,4 +1,4 @@
-import { CategoriesArraySchema, CategoryWithProductsResponseSchema } from "@/app/schemas"
+import { CategoriesArraySchema, CategoryWithProductsResponseSchema } from "@/src/schemas"
 import { redirect } from "next/navigation"
 
 const url = `${process.env.API_URL}/categories`

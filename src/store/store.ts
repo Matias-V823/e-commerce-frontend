@@ -1,4 +1,4 @@
-import { Product, ShoppingCart } from "@/app/schemas";
+import { Coupon, CouponResponseSchema, Product, ShoppingCart } from "@/src/schemas";
 import { devtools } from 'zustand/middleware'
 import { create } from "zustand";
 
@@ -6,10 +6,13 @@ import { create } from "zustand";
 interface Store {
     total: number
     contents: ShoppingCart
+    coupon: Coupon
     addToCart: (product: Product) => void
     removeFromCart: (productId: number) => void
     updateQuantity: (productId: number, quantity: number) => void
     calculateTotal: () => void
+    calculateDiscount: (percentage: number) => void
+    applyCoupon: (code: string) => Promise<void>
 }
 
 export const useStore = create<Store>()(devtools((set, get) => ({
@@ -73,5 +76,34 @@ export const useStore = create<Store>()(devtools((set, get) => ({
             total
         }))
     },
+    calculateDiscount: (percentage) => {
+        const discount = (percentage / 100) * get().total 
+        set(() =>({
+            total: get().total - discount
+        }))
+    },
+    applyCoupon: async (code: string) => {
+        const req = await fetch('/coupons/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ coupon_name: code })
+        })
+        const json = await req.json()
+        const response = CouponResponseSchema.parse(json)
+        set(() => ({
+            coupon: {
+                name: response.coupon.name,
+                message: response.message,
+                percentage: response.coupon.percentage
+            }
+        }))
+    },
+    coupon:{
+        percentage: 0,
+        message: '',
+        name: ''
+    },  
     contents: []
 })))

@@ -11,10 +11,21 @@ const Payment = () => {
   const total = useStore((state) => state.total);
   const removeFromCart = useStore((state) => state.removeFromCart);
   const updateQuantity = useStore((state) => state.updateQuantity);
+  const applyCoupon = useStore((state) => state.applyCoupon)
+  const coupon = useStore((state) => state.coupon)
+  const calculateDiscount = useStore((state) => state.calculateDiscount)
 
   const [couponOpen, setCouponOpen] = useState(false);
   const [couponValue, setCouponValue] = useState('');
   const [agreed, setAgreed] = useState(false);
+
+
+  const handleCoupon = async () => {
+    await applyCoupon(couponValue);
+    calculateDiscount(coupon.percentage) 
+  }
+
+
 
   return (
     <div className="min-h-screen bg-paper flex flex-col">
@@ -144,16 +155,25 @@ const Payment = () => {
               <span>Código de descuento</span>
               <span className="text-base font-light leading-none">{couponOpen ? '−' : '+'}</span>
             </button>
+            {
+              coupon.message && (
+                <p className="mt-2 text-[10px] text-green-600">
+                  {coupon.message}
+                </p>
+              )
+            }
             {couponOpen && (
               <div className="mt-3 flex border border-black/10">
                 <input
                   type="text"
                   value={couponValue}
-                  onChange={(e) => setCouponValue(e.target.value.toUpperCase())}
+                  onChange={(e) => setCouponValue(e.target.value)}
                   placeholder="CÓDIGO"
                   className="flex-1 px-3 py-2.5 text-[11px] tracking-[0.08em] uppercase bg-surface placeholder:text-muted outline-none font-light"
                 />
-                <button className="px-4 text-[10px] tracking-[0.12em] uppercase font-medium border-l border-black/10 hover:bg-surface transition-colors cursor-pointer">
+                <button 
+                onClick={handleCoupon}
+                className="px-4 text-[10px] tracking-[0.12em] uppercase font-medium border-l border-black/10 hover:bg-surface transition-colors cursor-pointer">
                   Aplicar
                 </button>
               </div>

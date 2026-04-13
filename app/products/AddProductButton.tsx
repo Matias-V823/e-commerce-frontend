@@ -1,7 +1,7 @@
 "use client"
 
 import { useStore } from "@/src/store/store"
-import { Product } from "../schemas"
+import { Product } from "../../src/schemas"
 
 const AddProductButton = ({ product }: { product: Product }) => {
   const addToCart = useStore(state => state.addToCart)
