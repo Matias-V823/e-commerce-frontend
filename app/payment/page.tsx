@@ -22,6 +22,9 @@ const Payment = () => {
 
   const handleCoupon = async () => {
     await applyCoupon(couponValue);
+    setTimeout(() => {
+      setCouponOpen(false);
+    }, 4000)
   }
 
 
@@ -155,7 +158,7 @@ const Payment = () => {
               <span className="text-base font-light leading-none">{couponOpen ? '−' : '+'}</span>
             </button>
             {
-              coupon.message && (
+              coupon.message && couponOpen && (
                 <p className="mt-2 text-[10px] text-green-600">
                   {coupon.message}
                 </p>
