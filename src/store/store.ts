@@ -14,10 +14,22 @@ interface Store {
     calculateTotal: () => void
     calculateDiscount: (percentage: number) => void
     applyCoupon: (code: string) => Promise<void>
+    clearOrder: () => void
+}
+
+const initialState = {
+    total: 0,
+    discount: 0,
+    contents: [],
+    coupon: {
+        percentage: 0,
+        message: '',
+        name: ''
+    }
 }
 
 export const useStore = create<Store>()(devtools((set, get) => ({
-    total: 0,
+    ...initialState,
     addToCart: (product) => {
         const { id: productId, categoryId, ...data } = product
         let contents: ShoppingCart = []
@@ -26,10 +38,10 @@ export const useStore = create<Store>()(devtools((set, get) => ({
 
         if (duplicated >= 0) {
             if (get().contents[duplicated].quantity >= get().contents[duplicated].inventory) return
-            contents = get().contents.map(item=> item.productId === productId ? {
+            contents = get().contents.map(item => item.productId === productId ? {
                 ...item,
                 quantity: item.quantity + 1
-            }: item) 
+            } : item)
 
         } else {
             contents = [...get().contents, {
@@ -42,7 +54,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         set(() => ({
             contents
         }))
-        
+
         get().calculateTotal()
 
     },
@@ -51,6 +63,9 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         set(() => ({
             contents
         }))
+        if(!get().contents.length) {
+            get().clearOrder()
+        }
         get().calculateTotal()
     },
     updateQuantity: (productId, quantity) => {
@@ -79,7 +94,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
     },
     calculateDiscount: (percentage) => {
         const discount = get().total * (percentage / 100)
-        set(() =>({
+        set(() => ({
             discount,
             total: get().total - discount
         }))
@@ -95,7 +110,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         const json = await req.json()
         const response = CouponResponseSchema.parse(json)
         const percentage = response.coupon.percentage
-        
+
         set(() => ({
             coupon: {
                 name: response.coupon.name,
@@ -103,13 +118,13 @@ export const useStore = create<Store>()(devtools((set, get) => ({
                 percentage: percentage
             }
         }))
-        
+
         get().calculateDiscount(percentage)
     },
-    coupon:{
-        percentage: 0,
-        message: '',
-        name: ''
-    },  
-    contents: []
+    clearOrder: () => {
+        set(() => ({
+            ...initialState
+        }))
+    }
+
 })))
