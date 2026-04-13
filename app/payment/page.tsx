@@ -9,11 +9,11 @@ import { useState } from "react";
 const Payment = () => {
   const contents = useStore((state) => state.contents);
   const total = useStore((state) => state.total);
+  const discount = useStore((state) => state.discount)
   const removeFromCart = useStore((state) => state.removeFromCart);
   const updateQuantity = useStore((state) => state.updateQuantity);
   const applyCoupon = useStore((state) => state.applyCoupon)
   const coupon = useStore((state) => state.coupon)
-  const calculateDiscount = useStore((state) => state.calculateDiscount)
 
   const [couponOpen, setCouponOpen] = useState(false);
   const [couponValue, setCouponValue] = useState('');
@@ -166,7 +166,7 @@ const Payment = () => {
                 <input
                   type="text"
                   value={couponValue}
-                  onChange={(e) => setCouponValue(e.target.value)}
+                  onChange={(e) => setCouponValue(e.target.value.toUpperCase())}
                   placeholder="CÓDIGO"
                   className="flex-1 px-3 py-2.5 text-[11px] tracking-[0.08em] uppercase bg-surface placeholder:text-muted outline-none font-light"
                 />
@@ -189,9 +189,19 @@ const Payment = () => {
             <span className="text-[11px] text-ash">Gratis</span>
           </div>
 
-          <div className="border-t border-black/10 pt-5 pb-6 flex justify-between items-center">
-            <span className="text-[11px] tracking-[0.14em] uppercase font-medium">Total</span>
-            <span className="text-[15px] font-medium tabular-nums">${total.toFixed(2)}</span>
+          <div className="flex-col border-t border-black/10 pt-5 pb-6 items-center">
+            {discount! > 0 && (
+              <div className="flex flex-col items-start gap-1">
+                <span className="text-[10px] tracking-[0.08em] uppercase text-green-600 font-light">
+                  -${discount!.toFixed(2)}
+                </span>
+              </div>
+            )
+            }
+            <div className="flex justify-between">
+              <span className="text-[11px] tracking-[0.14em] uppercase font-medium">Total</span>
+              <span className="text-[15px] font-medium tabular-nums">${total.toFixed(2)}</span>
+            </div>
           </div>
 
           <div className="flex items-start gap-3 mb-5">

@@ -5,6 +5,7 @@ import { create } from "zustand";
 
 interface Store {
     total: number
+    discount?: number
     contents: ShoppingCart
     coupon: Coupon
     addToCart: (product: Product) => void
@@ -79,6 +80,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
     calculateDiscount: (percentage) => {
         const discount = get().total * (percentage / 100)
         set(() =>({
+            discount,
             total: get().total - discount
         }))
     },
