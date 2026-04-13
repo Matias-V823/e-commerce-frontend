@@ -22,7 +22,6 @@ const Payment = () => {
 
   const handleCoupon = async () => {
     await applyCoupon(couponValue);
-    calculateDiscount(coupon.percentage) 
   }
 
 

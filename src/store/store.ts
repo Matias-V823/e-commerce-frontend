@@ -77,7 +77,7 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         }))
     },
     calculateDiscount: (percentage) => {
-        const discount = (percentage / 100) * get().total 
+        const discount = get().total * (percentage / 100)
         set(() =>({
             total: get().total - discount
         }))
@@ -92,13 +92,17 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         })
         const json = await req.json()
         const response = CouponResponseSchema.parse(json)
+        const percentage = response.coupon.percentage
+        
         set(() => ({
             coupon: {
                 name: response.coupon.name,
                 message: response.message,
-                percentage: response.coupon.percentage
+                percentage: percentage
             }
         }))
+        
+        get().calculateDiscount(percentage)
     },
     coupon:{
         percentage: 0,
