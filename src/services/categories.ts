@@ -4,7 +4,11 @@ import { redirect } from "next/navigation"
 const url = `${process.env.API_URL}/categories`
 
 export async function getProducts(categoryId: string) {
-  const req = await fetch(`${url}/${categoryId}?products=true`)
+  const req = await fetch(`${url}/${categoryId}?products=true`,{
+    next: {
+      tags: ["products-by-category"]
+    }
+  })
   if (!req.ok) {
     redirect('/1')
   }

@@ -1,4 +1,4 @@
-import AddProductButton from "@/app/products/AddProductButton"
+import AddProductButton from "@/app/components/products/AddProductButton"
 import HeroImage from "@/app/ui/HeroImage"
 import NavSection from "@/app/ui/NavSection"
 import { getProducts } from "@/src/services/categories"
