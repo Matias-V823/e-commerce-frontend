@@ -5,7 +5,9 @@ import { useStore } from "@/src/store/store";
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Payment = () => {
   const contents = useStore((state) => state.contents);
@@ -14,7 +16,9 @@ const Payment = () => {
   const removeFromCart = useStore((state) => state.removeFromCart);
   const updateQuantity = useStore((state) => state.updateQuantity);
   const applyCoupon = useStore((state) => state.applyCoupon)
+  const clearOrder = useStore((state) => state.clearOrder)
   const coupon = useStore((state) => state.coupon)
+  const router = useRouter()
 
   const [couponOpen, setCouponOpen] = useState(false);
   const [couponValue, setCouponValue] = useState('');
@@ -25,11 +29,27 @@ const Payment = () => {
     contents
   }
 
-  const submitOrderWithData = submitOrder.bind(null,order)
+  const submitOrderWithData = submitOrder.bind(null, order)
   const [state, dispatch] = useActionState(submitOrderWithData, {
     errors: [],
     success: ''
   })
+
+  useEffect(() => {
+
+    if(state.errors && state.errors.length > 0){
+      state.errors.forEach((error) => toast.error(error))
+    }
+
+    if (state.success) {
+      toast.success(state.success)
+
+      setTimeout(() => {
+        clearOrder()
+        router.push('/')
+      }, 1500)
+    }
+  }, [state, router])
 
 
   const handleCoupon = async () => {
@@ -185,9 +205,9 @@ const Payment = () => {
                   placeholder="CÓDIGO"
                   className="flex-1 px-3 py-2.5 text-[11px] tracking-[0.08em] uppercase bg-surface placeholder:text-muted outline-none font-light"
                 />
-                <button 
-                onClick={handleCoupon}
-                className="px-4 text-[10px] tracking-[0.12em] uppercase font-medium border-l border-black/10 hover:bg-surface transition-colors cursor-pointer">
+                <button
+                  onClick={handleCoupon}
+                  className="px-4 text-[10px] tracking-[0.12em] uppercase font-medium border-l border-black/10 hover:bg-surface transition-colors cursor-pointer">
                   Aplicar
                 </button>
               </div>
@@ -222,9 +242,8 @@ const Payment = () => {
           <div className="flex items-start gap-3 mb-5">
             <button
               onClick={() => setAgreed(!agreed)}
-              className={`mt-0.5 w-4 h-4 shrink-0 border flex items-center justify-center transition-colors cursor-pointer ${
-                agreed ? 'bg-ink border-ink' : 'border-black/30 hover:border-ink'
-              }`}
+              className={`mt-0.5 w-4 h-4 shrink-0 border flex items-center justify-center transition-colors cursor-pointer ${agreed ? 'bg-ink border-ink' : 'border-black/30 hover:border-ink'
+                }`}
               aria-label="Aceptar términos y condiciones"
             >
               {agreed && (

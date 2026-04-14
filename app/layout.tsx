@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import ToastNotification from "./ui/ToastNotification";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,7 +31,10 @@ export default function RootLayout({
       lang="es"
       className={`${inter.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-paper text-ink">{children}</body>
+      <body className="min-h-full flex flex-col bg-paper text-ink">
+        {children}
+        <ToastNotification />
+      </body>
     </html>
   );
 }
