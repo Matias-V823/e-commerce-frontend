@@ -1,10 +1,11 @@
 'use client';
 
+import { submitOrder } from "@/actions/submit-order-action";
 import { useStore } from "@/src/store/store";
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 
 const Payment = () => {
   const contents = useStore((state) => state.contents);
@@ -18,6 +19,17 @@ const Payment = () => {
   const [couponOpen, setCouponOpen] = useState(false);
   const [couponValue, setCouponValue] = useState('');
   const [agreed, setAgreed] = useState(false);
+  const order = {
+    total,
+    coupon: coupon.name,
+    contents
+  }
+
+  const submitOrderWithData = submitOrder.bind(null,order)
+  const [state, dispatch] = useActionState(submitOrderWithData, {
+    errors: [],
+    success: ''
+  })
 
 
   const handleCoupon = async () => {
@@ -236,12 +248,15 @@ const Payment = () => {
             </p>
           </div>
 
-          <button
-            disabled={!agreed || contents.length === 0}
-            className="w-full bg-ink text-paper text-[11px] tracking-[0.18em] uppercase py-4 hover:bg-ink/80 transition-colors cursor-pointer font-light disabled:opacity-30 disabled:cursor-not-allowed"
-          >
-            Proceder al pago
-          </button>
+          <form action={dispatch}>
+            <button
+              type="submit"
+              disabled={!agreed || contents.length === 0}
+              className="w-full bg-ink text-paper text-[11px] tracking-[0.18em] uppercase py-4 hover:bg-ink/80 transition-colors cursor-pointer font-light disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              Proceder al pago
+            </button>
+          </form>
 
           <div className="mt-5 pt-5 border-t border-black/6">
             <div className="flex items-center justify-center gap-5 mb-4">
