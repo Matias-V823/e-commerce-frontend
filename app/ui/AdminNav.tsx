@@ -1,29 +1,22 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function AdminNav() {
-  return (
-    <header className="px-10 py-5 bg-gray-700 flex justify-between">
-        <div className="flex gap-5 text-white">
-          {/* <Logo /> */}
-          <h2>Ecommerce-matiasv</h2>
-        </div>
 
-        <div className="flex gap-2 items-center">
-            <Link
-                href={'/admin/products'}
-                className="rounded text-white font-bold p-2"
-            >Productos</Link>
+    return (
+        <header className="sticky top-0 z-40 bg-paper border-b border-black/10">
+            <div className="flex items-center justify-between h-14 px-6">
 
-            <Link
-                href={'/admin/sales'}
-                className="rounded text-white font-bold p-2"
-            >Ventas</Link>
-
-            <Link
-                href={'/'}
-                className="rounded bg-green-400 font-bold py-2 px-10"
-            >Tienda</Link>
-        </div>
-    </header>
-  )
+                <div className="flex-1">
+                    <span className="text-[11px] tracking-[0.2em] uppercase font-medium select-none">
+                        E-Commerce by Matias-V823
+                    </span>
+                </div>
+                <nav className="flex items-center gap-8">
+                    <Link href={'/admin/products'} className="text-xs ">Productos</Link>
+                    <Link href={'/admin/sales'} className="text-xs ">Ventas</Link>
+                    <Link href={'/'} className="text-xs bg-gray-700 p-2 rounded-full text-zinc-50">Tienda</Link>
+                </nav>
+            </div>
+        </header>
+    );
 }
