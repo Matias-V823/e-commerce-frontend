@@ -1,4 +1,4 @@
-import MainNav from "../ui/MainNav";
+import MainNav from "../components/ui/MainNav";
 
 export default function StoreLayout({
   children,

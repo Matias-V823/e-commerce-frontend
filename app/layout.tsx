@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import ToastNotification from "./ui/ToastNotification";
+import ToastNotification from "./components/ui/ToastNotification";
 
 const inter = Inter({
   variable: "--font-inter",

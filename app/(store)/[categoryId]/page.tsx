@@ -1,6 +1,6 @@
 import AddProductButton from "@/app/components/products/AddProductButton"
-import HeroImage from "@/app/ui/HeroImage"
-import NavSection from "@/app/ui/NavSection"
+import HeroImage from "@/app/components/ui/HeroImage"
+import NavSection from "@/app/components/ui/NavSection"
 import { getProducts } from "@/src/services/categories"
 import Image from "next/image"
 

@@ -1,5 +1,5 @@
-import AdminNav from "../ui/AdminNav";
-import ToastNotification from "../ui/ToastNotification";
+import AdminNav from "../components/ui/AdminNav";
+import ToastNotification from "../components/ui/ToastNotification";
 
 export default function RootLayout({
   children,
