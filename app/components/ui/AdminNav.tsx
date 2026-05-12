@@ -14,7 +14,7 @@ export default function AdminNav() {
                 <nav className="flex items-center gap-8">
                     <Link href={'/admin/products'} className="text-xs ">Productos</Link>
                     <Link href={'/admin/sales'} className="text-xs ">Ventas</Link>
-                    <Link href={'/'} className="text-xs bg-gray-700 p-2 rounded-full text-zinc-50">Tienda</Link>
+                    <Link href={'/'} className="text-xs bg-zinc-950 p-2 rounded-full text-zinc-50">Tienda</Link>
                 </nav>
             </div>
         </header>
