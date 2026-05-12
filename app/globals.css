@@ -118,7 +118,8 @@
 }
 
 .react-calendar__tile--now {
-  background: rgba(10, 10, 10, 0.05);
+  background: var(--color-ink) !important;
+  color: var(--color-paper);
   font-weight: 500;
 }
 
@@ -135,13 +136,9 @@
   font-weight: 400;
 }
 
-.react-calendar__tile--hasActive {
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: var(--color-muted);
+  color: var(--color-ink);
   opacity: 0.45;
 }
 
