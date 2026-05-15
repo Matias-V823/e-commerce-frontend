@@ -93,6 +93,18 @@ export const TransactionResponseSchema = z.object({
 
 export const TransactionsResponseSchema = z.array(TransactionResponseSchema)
 
+export const WeekDaySchema = z.object({
+    date: z.string(),
+    count: z.number(),
+    total: z.number(),
+})
+export const WeeklyDataSchema = z.array(WeekDaySchema)
+
+export const MonthlyDataSchema = z.object({
+    count: z.number(),
+    total: z.string(),
+})
+
 
 
 
