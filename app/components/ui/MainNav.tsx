@@ -4,11 +4,15 @@ import { ShoppingBagIcon, MagnifyingGlassIcon, UserIcon } from "@heroicons/react
 import HoverOverlay from "./HoverOverlay";
 import { CartPreview } from "./CartPreview";
 import { useStore } from "@/src/store/store";
+import { usePathname } from "next/navigation";
 
 export default function MainNav() {
+  const path = usePathname();
   const itemCount = useStore((state) =>
     state.contents.reduce((acc, item) => acc + item.quantity, 0)
   );
+
+  const navItems = ["Hombre", "Mujer", "Niño"];
 
   return (
     <header className="sticky top-0 z-40 bg-paper border-b border-black/10">
@@ -21,14 +25,20 @@ export default function MainNav() {
         </div>
 
         <nav className="flex items-center gap-8">
-          {["Hombre", "Mujer", "Niño"].map((label) => (
-            <button
-              key={label}
-              className="text-[11px] tracking-[0.14em] uppercase font-light text-ink hover:text-ash transition-colors cursor-pointer"
-            >
-              {label}
-            </button>
-          ))}
+          {navItems.map((label) => {
+            const isActive = path === `/${label.toLowerCase()}`;
+
+            return (
+              <button
+                key={label}
+                className={`text-[11px] tracking-[0.14em] uppercase font-light transition-colors cursor-pointer ${
+                  isActive ? "text-ash" : "text-ink hover:text-ash"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
         </nav>
 
         <div className="flex-1 flex items-center justify-end gap-5">
